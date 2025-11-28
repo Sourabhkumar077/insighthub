@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const InsightSchema = new mongoose.Schema({
+const InsightSchema = new Schema({
     title : {
         type: String,
         required : true
@@ -12,7 +12,7 @@ const InsightSchema = new mongoose.Schema({
         type : String
     }],
     createdBy : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : Schema.Types.ObjectId,
         ref : 'User',
         required : true,
     }
@@ -22,4 +22,4 @@ const InsightSchema = new mongoose.Schema({
 {timestamps : true}
 );
 
-module.exports = mongoose.model("Insight",InsightSchema);
+export default model("Insight",InsightSchema);
