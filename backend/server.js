@@ -1,29 +1,36 @@
- const express = require('express');
- const mongoose = require('mongoose');
+import express , {json} from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
- require('dotenv').config();
+import authRoutes from './routes/authRoutes.js'
 
- const app = express();
+dotenv.config();
 
- app.use(express.json());
+const app = express();
 
-//  route to check api condtion 
- app.get('/api/health',(req,res)=>{
-    res.json({
-        ok:true
+app.use(json());
+
+
+// mounting the auth routes
+app.use('/api/auth', authRoutes);
+
+
+// Health check route
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true });
+});
+
+// Start server + connect DB
+const start = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/insighthub');
+    app.listen(5000, () => {
+      console.log("🚀 Server is running on port 5000");
     });
- });
+  } catch (error) {
+    console.error("❌ Startup error:", error);
+    process.exit(-1);
+  }
+};
 
- const start = async ()=>{
-    try {
-        await mongoose.connect(process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/insighthub');
-        app.listen(5000,()=>{
-            console.log("Server is running on port: 5000" );  
-        })
-    } catch (error) {
-        console.error("Startup error : ", error);
-        process.exit(-1);   
-    }
- };
-
- start();
+start();
