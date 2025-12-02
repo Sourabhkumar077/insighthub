@@ -1,7 +1,9 @@
-import {useState} from 'react'
+import {useState,useContext} from 'react'
 import { login } from '../services/authService';
+import {AuthContext} from '../context/AuthContext.jsx'
 
 const Login = () => {
+  const {loginUser} = useContext(AuthContext);
 
   const [form, setForm] = useState({
     email :"",
@@ -16,12 +18,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await login(form);
-      localStorage.setItem("token", result.token);
-      // console.log(result);
+      // console.log("result data = ",result);
+      loginUser(result);
       alert("Login successfull !");
     } catch (error) {
       console.log(error);
-      alert("Login failed due to error!")
+      alert("Login failed due to error!" , error);
     }
   }
   return (
@@ -39,7 +41,7 @@ const Login = () => {
         <input
           type="password"
           name="password"
-          placeholder='Enter your passowrd'
+          placeholder='Enter your password'
           value={form.password}
           onChange={handleChange}
         />
@@ -50,4 +52,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

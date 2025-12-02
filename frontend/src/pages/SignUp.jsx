@@ -1,7 +1,10 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { signup } from '../services/authService.js';
+import { AuthContext } from "../context/AuthContext.jsx";
+
 
 const SignUp = () => {
+    const { loginUser } = useContext(AuthContext);
 
     const [form, setForm] = useState({
         name: "",
@@ -16,7 +19,7 @@ const SignUp = () => {
         e.preventDefault();
         try {
             const result = await signup(form);
-            localStorage.setItem("token", result.token);
+            loginUser(result);
             // console.log(result);
             // console.log(result.token);
             alert("Signup successfull !")
