@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       try {
         const data = await getMe(token); // using service - getme to fetch the user login info
+        setUser(data.user);
         console.log(data);
       } catch (error) {
         localStorage.removeItem("token");
