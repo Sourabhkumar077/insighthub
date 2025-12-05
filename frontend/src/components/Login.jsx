@@ -5,10 +5,12 @@ import { Label } from '@/components/ui/label';
 import { useState, useContext } from "react";
 import { login } from '../services/authService.js';
 import { AuthContext } from "../context/AuthContext.jsx";
-import { Link } from 'react-router-dom'; // Use react-router-dom in React, not Next.js Link
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
   const { loginUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
@@ -25,6 +27,8 @@ export default function LoginPage() {
       const result = await login(form);
       loginUser(result);
       alert("Login successful!");
+      navigate("/dashboard");
+      
     } catch (err) {
       if (err.response) {
         console.error("Error response:", err.response.data);
