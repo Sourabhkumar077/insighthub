@@ -1,6 +1,6 @@
 
-import SignUp from './pages/SignUp.jsx';
-import Login from './pages/Login.jsx';
+import SignUp from './components/Signup';
+import Login from './components/Login';
 import DashBoard from './pages/DashBoard.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx'
